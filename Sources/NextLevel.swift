@@ -2116,6 +2116,7 @@ extension NextLevel {
             if previewConnection.isVideoOrientationSupported && previewConnection.videoOrientation != currentOrientation {
                 previewConnection.videoOrientation = currentOrientation
                 didChangeOrientation = true
+                previewConnection.isVideoMirrored = true
             }
         }
         
@@ -2123,6 +2124,7 @@ extension NextLevel {
             if videoConnection.isVideoOrientationSupported && videoConnection.videoOrientation != currentOrientation {
                 videoConnection.videoOrientation = currentOrientation
                 didChangeOrientation = true
+                videoConnection.isVideoMirrored = true
             }
         }
         
@@ -2130,6 +2132,7 @@ extension NextLevel {
             if photoConnection.isVideoOrientationSupported && photoConnection.videoOrientation != currentOrientation {
                 photoConnection.videoOrientation = currentOrientation
                 didChangeOrientation = true
+                photoConnection.isVideoMirrored = true
             }
         }
         
