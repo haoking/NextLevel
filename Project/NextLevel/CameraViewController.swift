@@ -168,9 +168,12 @@ class CameraViewController: UIViewController {
         nextLevel.photoDelegate = self
         
         // video configuration
-        nextLevel.videoConfiguration.bitRate = 2000000
+        nextLevel.videoConfiguration.preset = AVCaptureSession.Preset.hd1280x720
+        nextLevel.videoConfiguration.bitRate = 5500000
+        nextLevel.videoConfiguration.maxKeyFrameInterval = 30
         nextLevel.videoConfiguration.scalingMode = AVVideoScalingModeResizeAspectFill
-        
+        nextLevel.videoConfiguration.profileLevel = AVVideoProfileLevelH264HighAutoLevel
+
         // audio configuration
         nextLevel.audioConfiguration.bitRate = 96000
     }
@@ -245,14 +248,14 @@ extension CameraViewController {
             
             if session.clips.count > 1 {
                 NextLevel.shared.session?.mergeClips(usingPreset: AVAssetExportPresetHighestQuality, completionHandler: { (url: URL?, error: Error?) in
-                    if let videoUrl = url {
-                        self.saveVideo(withURL: videoUrl)
+                    if let url = url {
+                        self.saveVideo(withURL: url)
                     } else if let _ = error {
                         print("failed to merge clips at the end of capture \(String(describing: error))")
                     }
                 })
-            } else if let videoUrl = NextLevel.shared.session?.lastClipUrl {
-                self.saveVideo(withURL: videoUrl)
+            } else if let lastClipUrl = NextLevel.shared.session?.lastClipUrl {
+                self.saveVideo(withURL: lastClipUrl)
             } else {
                 // prompt that the video has been saved
                 let alertController = UIAlertController(title: "Video Capture", message: "Not enough video captured!", preferredStyle: .alert)
